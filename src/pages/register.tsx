@@ -12,6 +12,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
+    role: "user",
   })
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,6 +51,18 @@ function Register() {
                 <input type="password" placeholder='Enter Password' name='password'
                 onChange={e => setValues({...values, password: e.target.value})}
                 className='form-control rounded-0'/>
+            </div>
+
+            <div className='mb-3'>
+             <label><strong>Role</strong></label>
+                <select
+                className="form-control rounded-0"
+                value={values.role}
+                onChange={e => setValues({ ...values, role: e.target.value })}
+                >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
             <button type='submit' className='btn btn-primary w-100 rounded-0'> Sign up</button>
             <p>Already have an account?</p>

@@ -5,7 +5,10 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Home from "./pages/Home";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Dashboard from './pages/Dashboard';
+import UserDashboard from './pages/UserDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import manageDonations from './pages/manageDonations';
+import ManageDonations from './pages/manageDonations';
 
 
 function App() {
@@ -16,7 +19,9 @@ function App() {
           <Route path="/" element={<><Navbar/><Home/> </>} />
           <Route path="/register" element={<Register />} />
           <Route path="/log-in" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/user-dashboard" element={<UserDashboard/>} />
+          <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+          <Route path="/user-dashboard/manage-donations" element={<ManageDonations/>} />
       </Routes>
     </Router>
     </div>

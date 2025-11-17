@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 
-function login() {
+function Login() {
 
   const navigate = useNavigate()
   axios.defaults.withCredentials=true;
@@ -19,18 +19,24 @@ function login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios.post('http://localhost:8081/log-in', values)
-  .then(res => {
-    console.log(res);
-    if (res.data.Status === "Success") {
-      navigate('/dashboard');
-    } else {
-      alert("Invalid Inputs");
-    }
-  })
-  .catch(err => console.log(err));
+      .then(res => {
+        console.log(res.data);
+        if (res.data.Status === "Success") {
+          
+          localStorage.setItem("userEmail", res.data.email);
+          localStorage.setItem("role", res.data.role);
 
-
-  }
+          if (res.data.role === "admin") {
+            navigate('/admin-dashboard');
+          } else {
+            navigate('/user-dashboard');
+          }
+        } else {
+          alert(res.data.Error || "Invalid Inputs");
+        }
+      })
+      .catch(err => console.error("Login error:", err));
+  };
     
   return (
     <div className='d-flex justify-content-center align-items-center vh-100'>
@@ -60,7 +66,7 @@ function login() {
 }
 
 
-export default login
+export default Login
 
 
 

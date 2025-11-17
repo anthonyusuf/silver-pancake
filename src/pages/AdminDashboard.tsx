@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Dashboard = () => {
+const adminDashboard = () => {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
@@ -38,7 +38,7 @@ const Dashboard = () => {
             <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
               <li className="w-100">
                 <Link
-                  to="/dashboard"
+                  to="/admin-dashboard"
                   className="nav-link text-white px-0 align-middle"
                 >
                   <i className="fs-4 bi-speedometer2 ms-2"></i>
@@ -56,7 +56,7 @@ const Dashboard = () => {
               </li>
               <li className="w-100">
                 <Link
-                  to="/dashboard/employee"
+                  to="/dashboard/manage-donors"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-people ms-2"></i>
@@ -87,4 +87,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default adminDashboard;

@@ -26,13 +26,13 @@ const db = mysql.createConnection({
 
 
 app.post('/register', (req, res) => {
-  const { name, email, password } = req.body;
-  const sql = "INSERT INTO Login (name, email, password) VALUES (?)";
+  const { name, email, password, role } = req.body;
+  const sql = "INSERT INTO login (name, email, password, role) VALUES (?)";
 
   bcrypt.hash(password.toString(), salt, (err, hash) => {
     if (err) return res.status(500).json({ Error: "Password hashing error" });
 
-    const values = [name, email, hash];
+    const values = [name, email, hash, role || 'user']; 
 
     db.query(sql, [values], (err, result) => {
       if (err) return res.status(500).json({ Error: "Insert data error" });
@@ -40,20 +40,27 @@ app.post('/register', (req, res) => {
     });
   });
 });
+
   
 app.post('/log-in', (req, res) => {
     const sql = 'SELECT * FROM login WHERE email = ?';
     db.query(sql, [req.body.email], (err,data) => {
     if(err) return res.json({Error: "Login error in server"});
         if(data.length > 0) {
-            bcrypt.compare(req.body.password.toString(), data[0].password, (err, reponse) => {
+            bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
                 if(err) return res.json({Error: "Password compare error"});
-                if(reponse) {
-                    const name = data[0].name;
-                    const token = jwt.sign({name}, "jwt-key", {expiresIn: "1d"});
-                    res.cookie('token', token);
-                    return res.json({Status: "Success"});
+                if (response) {
+                  const name = data[0].name;
+                  const role = data[0].role;
+                  const token = jwt.sign({ name, role }, "jwt-key", { expiresIn: "1d" });
+                  res.cookie("token", token, {
+                   httpOnly: false,
+                  secure: false,
+                  sameSite: "lax",
+                });
+                return res.json({ Status: "Success", role, email: data[0].email });
                 }
+
                 else {
                     return res.json({Error: "Password not matched"})
                 }
@@ -61,7 +68,30 @@ app.post('/log-in', (req, res) => {
             })
         } else return res.json({Error: "No email"});
 })
-})
+});
+
+// Insert donation
+app.post('/donate', (req, res) => {
+  const { user_email, charity, amount, method } = req.body;
+  const sql = "INSERT INTO donations (user_email, charity, amount, method) VALUES (?)";
+  const values = [user_email, charity, amount, method];
+
+  db.query(sql, [values], (err, result) => {
+    if (err) return res.status(500).json({ Error: "Failed to process donation" });
+    return res.status(200).json({ Status: "Donation Successful", donationId: result.insertId });
+  });
+});
+
+// Fetch donations
+app.get('/donations', (req, res) => {
+  const { user_email } = req.query;
+  const sql = "SELECT * FROM donations WHERE user_email = ? ORDER BY created_at DESC";
+  db.query(sql, [user_email], (err, data) => {
+    if (err) return res.status(500).json({ Error: "Failed to fetch donations" });
+    return res.json(data);
+  });
+});
+
 
 app.get('/auth/logout', (req, res) => {
   res.clearCookie('token');
