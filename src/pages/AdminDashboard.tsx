@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -21,6 +20,7 @@ const adminDashboard = () => {
         alert("Server error");
       });
   };
+  
 
   return (
     <div className="container-fluid">

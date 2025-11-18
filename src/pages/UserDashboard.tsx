@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -21,6 +20,7 @@ const UserDashboard = () => {
         alert("Server error");
       });
   };
+const userName = localStorage.getItem("userName") || "User";
 
   return (
     <div className="container-fluid">
@@ -38,20 +38,11 @@ const UserDashboard = () => {
             <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
               <li className="w-100">
                 <Link
-                  to="/user-dashboard"
+                  to="/"
                   className="nav-link text-white px-0 align-middle"
                 >
                   <i className="fs-4 bi-speedometer2 ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Dashboard</span>
-                </Link>
-              </li>
-              <li className="w-100">
-                <Link
-                  to="/user-inbox"
-                  className="nav-link text-white px-0 align-middle"
-                >
-                  <i className="fs-4 bi-speedometer2 ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Inbox</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -80,6 +71,7 @@ const UserDashboard = () => {
           <div className="p-2 d-flex justify-content-center shadow">
             <h4>User Dashboard</h4>
           </div>
+          <div className="fs-3 ps-2"> Welcome {userName}</div>
           <Outlet />
         </div>
       </div>

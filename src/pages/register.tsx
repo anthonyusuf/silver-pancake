@@ -1,4 +1,3 @@
-import { Button } from '@mui/material'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -14,6 +13,8 @@ function Register() {
     password: "",
     role: "user",
   })
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios.post('http://localhost:8081/register', values)
@@ -48,9 +49,16 @@ function Register() {
             </div>
             <div className='mb-3'>
                 <label htmlFor="password"><strong>Password</strong></label>
-                <input type="password" placeholder='Enter Password' name='password'
+                <input type={showPassword ? "text" : "password"} placeholder='Enter Password' name='password'
                 onChange={e => setValues({...values, password: e.target.value})}
                 className='form-control rounded-0'/>
+                <button
+                 type="button"
+                  className="btn btn-outline-secondary btn-sm mt-2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
             </div>
 
             <div className='mb-3'>

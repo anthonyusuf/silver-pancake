@@ -7,8 +7,10 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
-import manageDonations from './pages/manageDonations';
 import ManageDonations from './pages/manageDonations';
+import ContactPage from './pages/ContactPage';
+import Inbox from './pages/inbox';
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 function App() {
@@ -19,11 +21,44 @@ function App() {
           <Route path="/" element={<><Navbar/><Home/> </>} />
           <Route path="/register" element={<Register />} />
           <Route path="/log-in" element={<Login />} />
-          <Route path="/user-dashboard" element={<UserDashboard/>} />
-          <Route path="/admin-dashboard" element={<AdminDashboard/>} />
-          <Route path="/user-dashboard/manage-donations" element={<ManageDonations/>} />
-      </Routes>
-    </Router>
+          <Route path="/contact" element={<ContactPage />} />
+          
+           <Route
+            path="/user-dashboard"
+            element={
+              <ProtectedRoute role="user">
+                <UserDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user-dashboard/manage-donations"
+            element={
+              <ProtectedRoute role="user">
+                <ManageDonations />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* ✅ Protected admin dashboard routes */}
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inbox"
+            element={
+              <ProtectedRoute role="admin">
+                <Inbox />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }

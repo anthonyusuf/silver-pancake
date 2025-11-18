@@ -58,11 +58,11 @@ app.post('/log-in', (req, res) => {
                   secure: false,
                   sameSite: "lax",
                 });
-                return res.json({ Status: "Success", role, email: data[0].email });
+                return res.json({ Status: "Success", role, email: data[0].email, name: data[0].name });
                 }
 
                 else {
-                    return res.json({Error: "Password not matched"})
+                    return res.json({Error: "Invalid Password"})
                 }
                 
             })
@@ -88,6 +88,27 @@ app.get('/donations', (req, res) => {
   const sql = "SELECT * FROM donations WHERE user_email = ? ORDER BY created_at DESC";
   db.query(sql, [user_email], (err, data) => {
     if (err) return res.status(500).json({ Error: "Failed to fetch donations" });
+    return res.json(data);
+  });
+});
+
+// Public contact form
+app.post('/contact', (req, res) => {
+  const { name, email, subject, message } = req.body;
+  const sql = "INSERT INTO messages (name, email, subject, message) VALUES (?)";
+  const values = [name, email, subject, message];
+
+  db.query(sql, [values], (err, result) => {
+    if (err) return res.status(500).json({ Error: "Failed to send message" });
+    return res.status(200).json({ Status: "Message Sent" });
+  });
+});
+
+// Admin fetch inbox
+app.get('/messages', (req, res) => {
+  const sql = "SELECT * FROM messages ORDER BY created_at DESC";
+  db.query(sql, (err, data) => {
+    if (err) return res.status(500).json({ Error: "Failed to fetch messages" });
     return res.json(data);
   });
 });

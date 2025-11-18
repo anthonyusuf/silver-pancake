@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+
 import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Link } from 'react-router-dom'
@@ -16,13 +16,15 @@ function Login() {
     password: "",
   })
 
+  const [showPassword, setShowPassword] = useState(false)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios.post('http://localhost:8081/log-in', values)
       .then(res => {
         console.log(res.data);
         if (res.data.Status === "Success") {
-          
+          localStorage.setItem("valid", "true");
+          localStorage.setItem("userName", res.data.name); 
           localStorage.setItem("userEmail", res.data.email);
           localStorage.setItem("role", res.data.role);
 
@@ -50,12 +52,19 @@ function Login() {
               </div>
               <div className= 'mb-3'>
               <label htmlFor="password">Password</label>
-              <input type="password" placeholder='Enter Password ' 
+              <input type={showPassword ? "text" : "password"} placeholder='Enter Password ' 
               className='form-control'
               onChange={e => setValues({...values, password: e.target.value})}/>
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm mt-2"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
             </div>
           
-              <Button type="submit" className='btn btn-outline-primary w-100 rounded-0'>Login</Button>
+              <button type="submit" className='btn btn-outline-success w-100 rounded-0'>Login</button>
               <p>Don't have an account?</p>
               <Link to="/register" className='btn btn-outline-primary w-100 rounded-0'>
                          Create account</Link>
