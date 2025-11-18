@@ -122,30 +122,32 @@ function ManageDonations() {
             </tr>
           </thead>
           <tbody>
-            {donations.map(donation => (
-              <tr key={donation.id}>
-                <td>{donation.id}</td>
-                <td>{donation.user_email}</td>   {/* ✅ use user_email */}
-                <td>{donation.charity}</td>
-                <td>${donation.amount}</td>
-                <td>{donation.method}</td>
-                <td>{new Date(donation.created_at).toLocaleString()}</td>
-                <td>
-                  <button
-                    onClick={() => printReceipt(donation)}
-                    className="btn btn-outline-secondary btn-sm"
-                  >
-                    Print Receipt
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {donations.length === 0 && (
-              <tr>
-                <td colSpan={7} className="text-center">No donations yet.</td>
-              </tr>
-            )}
-          </tbody>
+  {donations.length > 0 ? (
+    donations.map(donation => (
+      <tr key={donation.id}>
+        <td>{donation.id}</td>
+        <td>{donation.user_email}</td>
+        <td>{donation.charity}</td>
+        <td>${donation.amount}</td>
+        <td>{donation.method}</td>
+        <td>{new Date(donation.created_at).toLocaleString()}</td>
+        <td>
+          <button
+            onClick={() => printReceipt(donation)}
+            className="btn btn-outline-secondary btn-sm"
+          >
+            Print Receipt
+          </button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan={7} className="text-center">No donations yet.</td>
+    </tr>
+  )}
+</tbody>
+
         </table>
       </div>
     </div>
