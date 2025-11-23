@@ -7,10 +7,10 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
-import ManageDonations from './pages/manageDonations';
 import ContactPage from './pages/ContactPage';
 import Inbox from './pages/inbox';
 import ProtectedRoute from "./components/ProtectedRoute";
+import ManageReceipts from './pages/ManageReceipts';
 
 
 function App() {
@@ -32,15 +32,14 @@ function App() {
             }
           />
           <Route
-            path="/user-dashboard/manage-donations"
+            path="/manage-receipts"
             element={
               <ProtectedRoute role="user">
-                <ManageDonations />
+                <ManageReceipts />
               </ProtectedRoute>
             }
           />
-
-          {/* ✅ Protected admin dashboard routes */}
+          {/*Protected admin dashboard routes */}
           <Route
             path="/admin-dashboard"
             element={

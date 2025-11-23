@@ -18,9 +18,7 @@ function NavBar() {
 
 
             <div className="hiddenLinks">
-            <Link to="/"> Home </Link>
-            <Link to="/register"> About Us </Link>
-            <Link to="/contact"> Contact </Link>
+            <Link to="/contact"> Contact Us </Link>
             <Link to="/log-in"> Log in </Link>
             </div>
 
@@ -29,9 +27,7 @@ function NavBar() {
        
        
         <div className="rightSide">
-            <Link to="/"> Home </Link>
-            <Link to="/register"> About Us </Link>
-            <Link to="/contact"> Contact </Link>
+            <Link to="/contact"> Contact Us </Link>
             <Link to="/log-in"> Log in </Link>
 
 
@@ -39,6 +35,8 @@ function NavBar() {
                 <ReorderIcon />
                 </Button>
         </div>
+        
+        <div className="logo">WriteOffTrack</div>
        
         </div>
   );

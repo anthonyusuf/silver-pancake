@@ -1,0 +1,26 @@
+/* Receipts widget */
+.receipts {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.receipt-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.receipt-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.receipt-item:last-child {
+  border-bottom: none;
+}
+
+.receipt-item p {
+  margin: 4px 0;
+}

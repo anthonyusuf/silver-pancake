@@ -1,0 +1,28 @@
+.login-outline {
+  background: rgba(0, 0, 0, 0.4);        /* dark transparent background */
+  backdrop-filter: blur(1px);            /* frosted glass blur */
+  border-radius: 12px;                   /* rounded corners */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);/* subtle shadow */
+  padding: 1.5rem;                       /* spacing inside */
+}
+
+.login-outline label,
+.login-outline p,
+.login-outline a {
+  color: rgb(230, 230, 230);
+}
+
+.logo-link {
+  position: absolute;
+  top: 30px;   /* distance from top */
+  left: 35px;  /* distance from left */
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(255, 255, 255); /* make sure it contrasts with background */
+  letter-spacing: 1px;
+  text-decoration: none;
+  z-index: 10;
+}
+
+
+

@@ -1,0 +1,108 @@
+/* Background */
+.donations-container {
+  position: relative;
+  min-height: 100vh;
+  background: url("../components/background2.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.overlay {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Titles */
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Card styling */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Form */
+.donation-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.donation-form label {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.donation-form input,
+.donation-form select {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  padding: 12px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+/* Donation history */
+.donation-history table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.donation-history th,
+.donation-history td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.donation-history th {
+  background: #f8f9fa;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  padding: 6px 12px;
+  background: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}

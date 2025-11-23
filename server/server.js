@@ -26,16 +26,23 @@ const db = mysql.createConnection({
 
 
 app.post('/register', (req, res) => {
-  const { name, email, password, role } = req.body;
-  const sql = "INSERT INTO login (name, email, password, role) VALUES (?)";
+  const { firstname, lastname, email, password } = req.body;
+
+  const sql = `
+    INSERT INTO login (firstname, lastname, email, password, role)
+    VALUES (?, ?, ?, ?, 'user')
+  `;
 
   bcrypt.hash(password.toString(), salt, (err, hash) => {
     if (err) return res.status(500).json({ Error: "Password hashing error" });
 
-    const values = [name, email, hash, role || 'user']; 
+    const values = [firstname, lastname, email, hash];
 
-    db.query(sql, [values], (err, result) => {
-      if (err) return res.status(500).json({ Error: "Insert data error" });
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ Error: "Insert data error" });
+      }
       return res.status(200).json({ Status: "Success" });
     });
   });
@@ -50,15 +57,16 @@ app.post('/log-in', (req, res) => {
             bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
                 if(err) return res.json({Error: "Password compare error"});
                 if (response) {
-                  const name = data[0].name;
+                  const firstname = data[0].firstname;
+                  const lastname = data[0].lastname;
                   const role = data[0].role;
-                  const token = jwt.sign({ name, role }, "jwt-key", { expiresIn: "1d" });
+                  const token = jwt.sign({ firstname, lastname, role }, "jwt-key", { expiresIn: "1d" });
                   res.cookie("token", token, {
                    httpOnly: false,
                   secure: false,
                   sameSite: "lax",
                 });
-                return res.json({ Status: "Success", role, email: data[0].email, name: data[0].name });
+                return res.json({ Status: "Success", role, email: data[0].email, firstname: data[0].firstname, lastname: data[0].lastname });
                 }
 
                 else {
@@ -70,11 +78,11 @@ app.post('/log-in', (req, res) => {
 })
 });
 
-// Insert donation
 app.post('/donate', (req, res) => {
-  const { user_email, charity, amount, method } = req.body;
-  const sql = "INSERT INTO donations (user_email, charity, amount, method) VALUES (?)";
-  const values = [user_email, charity, amount, method];
+  const { user_email, amount, method } = req.body;
+
+  const sql = "INSERT INTO donations (user_email, amount, method) VALUES (?)";
+  const values = [user_email, amount, method];
 
   db.query(sql, [values], (err, result) => {
     if (err) return res.status(500).json({ Error: "Failed to process donation" });
@@ -82,15 +90,16 @@ app.post('/donate', (req, res) => {
   });
 });
 
-// Fetch donations
 app.get('/donations', (req, res) => {
   const { user_email } = req.query;
   const sql = "SELECT * FROM donations WHERE user_email = ? ORDER BY created_at DESC";
+
   db.query(sql, [user_email], (err, data) => {
     if (err) return res.status(500).json({ Error: "Failed to fetch donations" });
     return res.json(data);
   });
 });
+
 
 // Public contact form
 app.post('/contact', (req, res) => {

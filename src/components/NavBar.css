@@ -1,123 +1,99 @@
 .NavBar {
   width: 100%;
   height: 95px;
-  background-color: #5d8fbf;
+  position: absolute; /* sits above image */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
   display: flex;
   flex-direction: row;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  backdrop-filter: blur(2px);
+  background: rgba(104, 93, 93, 0.25); /* transparent glass */
+
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.3);
 }
 
+.logo {
+  position: absolute;
+  top: 30px;   /* distance from top */
+  left: 35px;  /* distance from left */
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(255, 255, 255); /* make sure it contrasts with background */
+  letter-spacing: 1px;
+}
 
-.NavBar .leftSide {
+.leftSide,
+.rightSide {
   flex: 50%;
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+.leftSide {
   padding-left: 50px;
 }
 
-
-.NavBar .leftSide img {
-  width: 200px;
-}
-
-
-.NavBar .rightSide {
-  flex: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
+.rightSide {
   justify-content: right;
   padding-right: 50px;
 }
 
-
 .NavBar a {
   color: white;
   text-decoration: none;
-  margin: 20px;
+  margin: 10px;
+  font-weight: 200;
+
+  padding: 6px 12px;              /* button shape */
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 10px;            /* smooth corners */
+  transition: 0.2s ease;
 }
 
+.NavBar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255,255,255,0.8);
+}
 
+/* Mobile button */
 .NavBar .rightSide button {
-  background-color: transparent;
+  background: transparent;
   border: none;
-  color: white;
   cursor: pointer;
 }
-
 
 .NavBar .rightSide svg {
   font-size: 40px;
 }
 
-
-.NavBar #open {
-  padding-left: 0px;
-}
-.NavBar #open img {
+/* Hidden links dropdown (mobile) */
+.hiddenLinks {
   display: none;
 }
 
-
-.NavBar #close img {
-  display: inherit;
-}
-
-
-.NavBar #open .hiddenLinks {
-  display: inherit;
+.leftSide.open .hiddenLinks {
+  display: flex;
+  flex-direction: column;
   margin-left: 30px;
 }
 
-
-.NavBar #close .hiddenLinks {
-  display: none;
-}
-
-
-.NavBar #open a {
-  width: 70px;
-  margin: 5px;
-}
-@media only screen and (max-width: 900px) {
-  .NavBar .rightSide a {
-    width: 70px;
-  }
-  .NavBar .leftSide {
-    padding-left: 50px;
-  }
-}
-
-
+/* Hide desktop links on mobile */
 @media only screen and (max-width: 600px) {
-  .NavBar .rightSide a {
+  .rightSide a {
     display: none;
   }
-
-
-  .NavBar .rightSide {
-    justify-content: flex-end;
-    padding-right: 50px;
-  }
-
-
-  .NavBar .rightSide button {
+  .rightSide button {
     display: inherit;
   }
 }
 
-
+/* Hide mobile button on desktop */
 @media only screen and (min-width: 600px) {
-  .NavBar .rightSide button {
-    display: none;
-  }
-
-
-  .hiddenLinks {
+  .rightSide button {
     display: none;
   }
 }
-
-
-
